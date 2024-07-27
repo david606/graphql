@@ -1,0 +1,27 @@
+#as super schema
+#三大根类型（root type: query mutation subscription）定义的时候本身或者继承其的子类必须有方法，否则就会报错
+schema {
+    # 查询
+    query: Query
+    # 变更
+    mutation: Mutation
+    # 暂不使用subscription
+    # subscription: Subscription
+
+}
+
+# 查询
+type Query{
+    queryProductById(id:ID!):Product
+}
+# 变更
+type Mutation {
+    updateProduct:Int
+}
+
+type Product {
+    id:ID
+    name:String
+    sppu:String
+    price:Int
+}

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.chinatower.demo.mapper.BookMapper">
+
+    <resultMap id="BookResultMap" type="com.chinatower.demo.model.Book">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="price" column="price"/>
+        <!-- 关联查询 Author 信息 -->
+        <association property="author" javaType="com.chinatower.demo.model.Author" resultMap="AuthorResultMap">
+            <id property="id" column="author_id"/>
+        </association>
+    </resultMap>
+
+    <resultMap id="AuthorResultMap" type="com.chinatower.demo.model.Author">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+    </resultMap>
+
+    <select id="getBookWithAuthor" parameterType="map" resultMap="BookResultMap">
+        SELECT
+        b.id,
+        b.NAME,
+        b.price,
+        b.author_id,
+        a.id,
+        a.NAME
+        FROM
+        t_book b LEFT JOIN t_author a
+        ON b.author_id = a.id
+        <where>
+            <if test="id != null">
+                AND b.id = #{id}
+            </if>
+            <if test="name != null and name != ''">
+                AND b.name = #{name}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectBookByDynamicFields" parameterType="map" resultMap="BookResultMap">
+        SELECT
+        <foreach collection="fields" item="field" separator=",">
+            ${field}
+        </foreach>
+        FROM
+        t_book b LEFT JOIN t_author a
+        ON b.author_id = a.id
+        <where>
+            <if test="id != null">
+                AND b.id = #{id}
+            </if>
+            <if test="name != null and name != ''">
+                AND b.name = #{name}
+            </if>
+        </where>
+    </select>
+
+</mapper>

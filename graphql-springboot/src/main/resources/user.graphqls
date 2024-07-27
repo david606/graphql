@@ -1,0 +1,23 @@
+#对应的User定义如下
+schema {
+    #定义查询
+    query: BookQuery
+}
+
+type BookQuery {
+    queryBook : Book
+    bookByParams(id: ID, name: String): Book
+    selectBookByDynamicFields(id: ID, name: String): Book
+}
+
+type Book {
+    id: ID
+    name: String
+    price: Float
+    author: Author
+}
+
+type Author {
+    id: ID
+    name: String
+}

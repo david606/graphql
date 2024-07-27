@@ -1,0 +1,19 @@
+spring:
+  datasource:
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://10.34.64.202:3306/custdb?characterEncoding=UTF-8&allowPublicKeyRetrieval=false&useSSL=false&serverTimezone=Asia/Shanghai&rewriteBatchedStatements=true&connectTimeout=230000&socketTimeout=300000 #jdbc:mysql://120.52.99.112:13306/k8s?characterEncoding=UTF-8&useSSL=false
+#    username: cust_user
+#    password: cust_user
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:test
+    schema: classpath:db/schema-h2.sql
+    data: classpath:db/data-h2.sql
+    username: root
+    password: test
+
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  mapper-locations: classpath:/mapper/*Mapper.xml
+  type-aliases-package: com.clc.boot.model
